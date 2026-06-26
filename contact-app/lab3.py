@@ -4,9 +4,13 @@ import re
 dbase = sqlite3.connect('contacts.db')
 dbase.execute('create table if not exists contacts(name text, qq_number text, phone text, email text)')
 cur = dbase.cursor()
-
+def reset_all():
+    if input("Type 'CONFIRM' to wipe all contacts: ") == "CONFIRM":
+        cur.execute("delete from contacts")
+        dbase.commit()
+        print("All contact info deleted!")
 def welcome():
-    option = input("\n A: Add a record \n\n D: Delete a record \n\n C: Modify a record \n\n F: Find a record \n\n S: Search for a record\n\n Please enter the letter corresponding to the function:  ")
+    option = input("\n A: Add a record \n\n D: Delete a record \n\n C: Modify a record \n\n F: Find a record \n\n S: Search for a record\n\n X: Reset All \n\n Please enter the letter corresponding to the function:  ")
     return option.lower()
 
 def check(name):
@@ -152,6 +156,8 @@ while True:
                 print("Please enter a valid letter option.")
     elif option == 'd':
         delete()
+    elif option == 'x':
+        reset_all()
     elif option == 'exit':
         print('DONE!!')
         break
