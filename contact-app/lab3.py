@@ -6,8 +6,8 @@ dbase.execute('create table if not exists contacts(name text, qq_number text, ph
 cur = dbase.cursor()
 
 def welcome():
-    inn = input("\n A: Add a record \n\n D: Delete a record \n\n C: Modify a record \n\n F: Find a record \n\n S: Search for a record\n\n Please enter the letter corresponding to the function:  ")
-    return inn.lower()
+    option = input("\n A: Add a record \n\n D: Delete a record \n\n C: Modify a record \n\n F: Find a record \n\n S: Search for a record\n\n Please enter the letter corresponding to the function:  ")
+    return option.lower()
 
 def check(name):
     cur.execute('select name from contacts where name=?', (name,))
@@ -44,7 +44,7 @@ def new():
     print("new contact info added!")
     dbase.commit()
 
-def all():
+def display_all():
     cur.execute('select name, qq_number, phone, email from contacts')
     obj = cur.fetchall()
     if not obj:
@@ -111,12 +111,12 @@ def search_field(field_name, prompt):
 
 print(" ############################### NKCS INFOSystem V0.1 ############################### \n ====================================================================== Powered by Zodiac==")
 while True:
-    inn = welcome()
-    if inn == 'a':
+    option = welcome()
+    if option == 'a':
         new()
-    elif inn == 'f':
-        all()
-    elif inn == 'c':
+    elif option == 'f':
+        display_all()
+    elif option == 'c':
         while True:
             i = input("Choose an option to modify contact information: \n n: name \n q: qq_number \n p: phone \n m: email \n: ")
             if i == 'n':
@@ -133,7 +133,7 @@ while True:
                 break
             else:
                 print("Please enter a valid letter options.")
-    elif inn == 's':
+    elif option == 's':
         while True:
             i = input("Choose an option to search contact information: \n n: name \n q: qq_number \n p: phone \n m: email \n: ")
             if i == 'n':
@@ -150,9 +150,9 @@ while True:
                 break
             else:
                 print("Please enter a valid letter option.")
-    elif inn == 'd':
+    elif option == 'd':
         delete()
-    elif inn == 'exit':
+    elif option == 'exit':
         print('DONE!!')
         break
     else:
